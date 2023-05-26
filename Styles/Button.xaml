@@ -26,7 +26,7 @@
                         </Border.Background>
 
                         <Grid>
-
+                            <!--RadioButtonIndicator Checked set a white bar on the left side in the botton-->
                             <Border x:Name="Indicator"
                                     Height="35"
                                     Width="4"
@@ -37,9 +37,7 @@
                                     CornerRadius="2" />
 
                             <ContentPresenter />
-
                         </Grid>
-                        
                     </Border>
 
                     <ControlTemplate.Triggers>
@@ -51,6 +49,10 @@
                                     TargetName="Indicator"
                                     Value="Visible" />
 
+                            <!-- Colour Indicator changing to cyan "#00FFFF" -->
+                            <Setter Property="Background"
+                                    TargetName="Indicator"
+                                    Value="#00FFFF" />
                         </Trigger>
 
                         <EventTrigger RoutedEvent="Border.MouseEnter"
@@ -65,7 +67,6 @@
                                                     Duration="0:0:0.3" />
                                 </Storyboard>
                             </BeginStoryboard>
-                            
                         </EventTrigger>
 
                         <EventTrigger RoutedEvent="Border.MouseLeave"
@@ -77,10 +78,9 @@
                                                     Storyboard.TargetProperty="Color"
                                                     From="#3E434A"
                                                     To="#272B2F"
-                                                    Duration="0:0:0.3" />
+                                                    Duration="0:0:0.05" />
                                 </Storyboard>
                             </BeginStoryboard>
-                            
                         </EventTrigger>
 
                         <Trigger Property="IsChecked"
@@ -93,15 +93,11 @@
                             <Setter Property="Visibility"
                                     TargetName="Indicator"
                                     Value="Visible" />
-
                         </Trigger>
-                        
                     </ControlTemplate.Triggers>
-                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
     </Style>
 
     <ImageBrush x:Key="close_app_def"
@@ -111,6 +107,62 @@
     <ImageBrush x:Key="close_app_mo"
                 ImageSource="/Images/shutdown_mo.png"
                 Stretch="None" />
+
+    <ImageBrush x:Key="navmenu_button_def"
+                ImageSource="/Images/navmenu_def.png"
+                Stretch="None" />
+
+    <ImageBrush x:Key="navmenu_button_mo"
+                ImageSource="/Images/navmenu_mo.png"
+                Stretch="None" />
+
+    <Style x:Key="HamburgerMenu"
+           TargetType="{x:Type Button}">
+
+        <Setter Property="Height"
+                Value="40" />
+        <Setter Property="Width"
+                Value="40" />
+        <Setter Property="HorizontalAlignment"
+                Value="Left" />
+        <Setter Property="VerticalAlignment"
+                Value="Top" />
+        <Setter Property="Margin"
+                Value="20,15,15,0" />
+
+        <Setter Property="Template">
+
+            <Setter.Value>
+
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Border x:Name="border"
+                            BorderThickness="0"
+                            Background="{StaticResource navmenu_button_def}">
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+
+                            <Setter Property="Background"
+                                    TargetName="border"
+                                    Value="{StaticResource navmenu_button_mo}" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+
+                            <Setter Property="Background"
+                                    TargetName="border"
+                                    Value="{StaticResource close_app_mo}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style x:Key="ExitApp"
            TargetType="{x:Type Button}">
@@ -135,7 +187,6 @@
                     <Border x:Name="border"
                             BorderThickness="0"
                             Background="{StaticResource close_app_def}">
-
                     </Border>
 
                     <ControlTemplate.Triggers>
@@ -146,7 +197,6 @@
                             <Setter Property="Background"
                                     TargetName="border"
                                     Value="{StaticResource close_app_mo}" />
-
                         </Trigger>
 
                         <Trigger Property="IsPressed"
@@ -155,17 +205,10 @@
                             <Setter Property="Background"
                                     TargetName="border"
                                     Value="{StaticResource close_app_mo}" />
-
                         </Trigger>
-
                     </ControlTemplate.Triggers>
-
                 </ControlTemplate>
-
             </Setter.Value>
-
         </Setter>
-
     </Style>
-
 </ResourceDictionary>

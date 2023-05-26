@@ -1,7 +1,7 @@
 ﻿<!--/// <Summary>
     /// Author : R. Arun Mutharasu
     /// Created :25-08-2022
-    /// YouTube Channel : C# Design Pro 
+    /// YouTube Channel : C# Design Pro
     /// </Summary>-->
 
 <Window x:Class="Page_Navigation_App.MainWindow"
@@ -28,16 +28,15 @@
 
         <!--// Window Border //-->
 
-        <Border Background="#212529"
-                CornerRadius="20" />
+        <Border Style="{StaticResource AppBorder_Style}" />
 
         <Grid>
 
-            <!--// Base Grid //-->
+            <!--// Window Grid Layout //-->
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="228" />
-                <ColumnDefinition Width="622" />
+                <ColumnDefinition Style="{StaticResource NavColumn_Width}" />
+                <ColumnDefinition Style="{StaticResource PageContentColumn_Width}" />
             </Grid.ColumnDefinitions>
 
             <!--// Navigation Panel //-->
@@ -45,10 +44,9 @@
             <Grid HorizontalAlignment="Left"
                   Width="228">
 
-                <Border Background="#272B2F"
-                        CornerRadius="20,0,0,20" />
+                <Border Style="{StaticResource NavBorder_Style}" />
 
-                <StackPanel Height="400"
+                <StackPanel Height="500"
                             Width="228">
 
                     <!--// Home //-->
@@ -64,11 +62,23 @@
 
                             <TextBlock Text="Home"
                                        Style="{StaticResource Text_Style}" />
-
                         </Grid>
-
                     </Menu:Btn>
 
+                    <!--// Customer //-->
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding TrebleClefCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_trebelclef.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="Treble Clef"
+                                       Style="{StaticResource Text_Style}" />
+                        </Grid>
+                    </Menu:Btn>
                     <!--// Customer //-->
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
@@ -81,9 +91,7 @@
 
                             <TextBlock Text="Customer"
                                        Style="{StaticResource Text_Style}" />
-
                         </Grid>
-
                     </Menu:Btn>
 
                     <!--// Products //-->
@@ -98,9 +106,7 @@
 
                             <TextBlock Text="Products"
                                        Style="{StaticResource Text_Style}" />
-
                         </Grid>
-
                     </Menu:Btn>
 
                     <!--// Orders //-->
@@ -115,9 +121,7 @@
 
                             <TextBlock Text="Orders"
                                        Style="{StaticResource Text_Style}" />
-
                         </Grid>
-
                     </Menu:Btn>
 
                     <!--// Transactions //-->
@@ -132,9 +136,7 @@
 
                             <TextBlock Text="Transactions"
                                        Style="{StaticResource Text_Style}" />
-
                         </Grid>
-
                     </Menu:Btn>
 
                     <!--// Shipments //-->
@@ -149,9 +151,7 @@
 
                             <TextBlock Text="Shipments"
                                        Style="{StaticResource Text_Style}" />
-
                         </Grid>
-
                     </Menu:Btn>
 
                     <!--// Settings //-->
@@ -166,28 +166,26 @@
 
                             <TextBlock Text="Settings"
                                        Style="{StaticResource Text_Style}" />
-
                         </Grid>
-
                     </Menu:Btn>
-
                 </StackPanel>
-
             </Grid>
 
+            <!--  // // -->
             <Grid Grid.Column="1">
 
                 <ContentControl x:Name="Pages"
                                 Content="{Binding CurrentView}" />
-
             </Grid>
-
         </Grid>
+
+        <!--    HamburgerMenu  -->
+        <!--<Button x:Name="HamburgerMenu"
+                Style="{StaticResource HamburgerMenu}"
+                Click="CloseApp_Click" />-->
 
         <Button x:Name="CloseApp"
                 Style="{StaticResource ExitApp}"
                 Click="CloseApp_Click" />
-
     </Grid>
-
 </Window>

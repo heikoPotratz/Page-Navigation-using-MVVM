@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--Definese Style of Pageanimation when Loaded used in [Views]-->
     <Style x:Key="Page_Style"
            TargetType="{x:Type UserControl}">
 
@@ -18,27 +19,33 @@
 
                 <Setter Property="Opacity"
                         Value="0" />
-
             </Trigger>
 
+            <!-- Animation definition on Loaded Event with Storyboard -->
             <EventTrigger RoutedEvent="Loaded">
                 <BeginStoryboard>
                     <Storyboard>
                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                         Duration="0:0:1"
+                                         Duration="0:0:0.6"
                                          From="0"
                                          To="1" />
+                        <!--Vertical Translation-->
                         <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                                         From="50"
+                                         From="-10"
                                          To="0"
-                                         Duration="0:0:0.8"
+                                         Duration="0:0:0.3"
                                          DecelerationRatio="0.6" />
+
+                        <!--Horisontal Translation-->
+                        <!--
+                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                         From="-2"
+                                         To="0"
+                                         Duration="0:0:0.1"
+                                         DecelerationRatio="0.6" />-->
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
-            
         </Style.Triggers>
-        
     </Style>
-    
 </ResourceDictionary>

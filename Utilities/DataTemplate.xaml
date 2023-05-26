@@ -23,6 +23,10 @@
         <view:Transactions />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:TrebleClefVM}">
+        <view:TrebleClef />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:ShipmentVM}">
         <view:Shipments />
     </DataTemplate>
@@ -30,5 +34,4 @@
     <DataTemplate DataType="{x:Type vm:SettingVM}">
         <view:Settings />
     </DataTemplate>
-    
 </ResourceDictionary>
