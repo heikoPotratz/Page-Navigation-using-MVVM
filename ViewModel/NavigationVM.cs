@@ -9,6 +9,7 @@ namespace Page_Navigation_App.ViewModel
 
         public NavigationVM()
         {
+            HamburgerMenuCommand = new RelayCommand(HamburgerMenu);
             HomeCommand = new RelayCommand(Home);
             CustomersCommand = new RelayCommand(Customer);
             ProductsCommand = new RelayCommand(Product);
@@ -35,6 +36,11 @@ namespace Page_Navigation_App.ViewModel
         }
 
         public ICommand CustomersCommand
+        {
+            get; set;
+        }
+
+        public ICommand HamburgerMenuCommand
         {
             get; set;
         }
@@ -76,6 +82,9 @@ namespace Page_Navigation_App.ViewModel
         }
 
         private void Customer(object obj) => CurrentView = new CustomerVM();
+
+        // Change to only switch width from default to narrow and bach again ...
+        private void HamburgerMenu(object obj) => CurrentView = new HamburgerMenuVM();
 
         private void Home(object obj) => CurrentView = new HomeVM();
 

@@ -30,13 +30,13 @@
 
         <Border Style="{StaticResource AppBorder_Style}" />
 
-        <Grid>
+        <Grid x:Name="MainWindow_Grid">
 
             <!--// Window Grid Layout //-->
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Style="{StaticResource NavColumn_Width}" />
-                <ColumnDefinition Style="{StaticResource PageContentColumn_Width}" />
+                <ColumnDefinition x:Name="NavColumn" Style="{StaticResource NavColumnWidth_Style}" />
+                <ColumnDefinition x:Name="PageContentColumn" Style="{StaticResource PageContentColumnWidth_Style}" />
             </Grid.ColumnDefinitions>
 
             <!--// Navigation Panel //-->
@@ -79,6 +79,7 @@
                                        Style="{StaticResource Text_Style}" />
                         </Grid>
                     </Menu:Btn>
+
                     <!--// Customer //-->
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
@@ -180,9 +181,10 @@
         </Grid>
 
         <!--    HamburgerMenu  -->
-        <!--<Button x:Name="HamburgerMenu"
-                Style="{StaticResource HamburgerMenu}"
-                Click="CloseApp_Click" />-->
+
+        <Button x:Name="HamburgerButton"
+                Style="{StaticResource HamburgerBtn_Style}"
+                Click="HamburgerMenu_Click" />
 
         <Button x:Name="CloseApp"
                 Style="{StaticResource ExitApp}"

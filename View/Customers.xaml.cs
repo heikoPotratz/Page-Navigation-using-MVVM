@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Page_Navigation_App.View
+namespace Page_Navigation_App.View;
+
+/// <summary>
+/// Interaction logic for Customers.xaml
+/// </summary>
+public partial class Customers : UserControl
 {
-    /// <summary>
-    /// Interaction logic for Customers.xaml
-    /// </summary>
-    public partial class Customers : UserControl
+    public Customers()
     {
-        public Customers()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

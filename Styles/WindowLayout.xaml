@@ -1,0 +1,95 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:Page_Navigation_App.Utilities">
+
+    <!--   xmlns:local="clr-namespace:Page_Navigation_App.Utilities   : kann nicht aufgelöst werden! -->
+    <!-- String resource that can be used as Const  -->
+
+    <system:Double x:Key="PageContendColumn_Width">622</system:Double>
+    <system:Double x:Key="NavBorder_Heigh">500</system:Double>
+
+    <!--   //WindowBorder Background-Style  //  -->
+    <system:Double x:Key="WindowBorder_Width">850</system:Double>
+    <system:Double x:Key="WindowBorder_Heigh">600</system:Double>
+
+    <system:Double x:Key="NavColumn_Width">228</system:Double>
+    <system:Double x:Key="NavNarrowColumn_Width">70</system:Double>
+
+    <Style x:Key="AppBorder_Style"
+           TargetType="Border">
+
+        <Setter Property="Background" Value="#212529" />
+
+        <Setter Property="CornerRadius" Value="10" />
+
+        <Setter Property="Width" Value="{StaticResource WindowBorder_Width}" />
+
+        <Setter Property="Height" Value="{StaticResource WindowBorder_Heigh}" />
+    </Style>
+
+    <!-- // +++++++++++++++++++++++++++++++ // -->
+    <!-- // Definition of Grid ColumnWidth  // -->
+    <!-- // +++++++++++++++++++++++++++++++ // -->
+
+    <!--  /// NavColumnWidth_Style //  -->
+
+    <Style x:Key="NavColumnWidth_Style"
+           TargetType="ColumnDefinition">
+        <Setter Property="Width" Value="228" />
+    </Style>
+
+    <!--  /// PageContentColumnWidth_Style //  -->
+
+    <Style x:Key="PageContentColumnWidth_Style" TargetType="ColumnDefinition">
+        <Setter Property="Width" Value="622" />
+    </Style>
+
+    <!---
+
+    ToDo:
+    Converter Klasse verwenden. es gibt aber Assably Fehler kann
+     Value="{Binding Source={StaticResource PageContendColumn_Width}, Converter={StaticResource CustomConverter}, ConverterParameter='DoubleToGridLength'}
+
+    -->
+
+    <!-- // Narrow width only Icons visible but no text // -->
+
+    <Style x:Key="NavColumnNarrowWidth_Style"
+           TargetType="ColumnDefinition">
+        <Setter Property="Width" Value="70" />
+    </Style>
+
+    <!-- // Default NavigationPanael Style// -->
+
+    <SolidColorBrush x:Key="NavigationBackgroundBrush" Color="#272B2F" />
+    <CornerRadius x:Key="CustomCornerRadius">10,0,0,10</CornerRadius>
+
+    <Style  x:Key="NavBorder_Style"
+            TargetType="Border">
+
+        <Setter Property="Background" Value="{StaticResource NavigationBackgroundBrush}" />
+
+        <Setter Property="CornerRadius" Value="{StaticResource CustomCornerRadius}" />
+
+        <Setter Property="Width" Value="{StaticResource NavColumn_Width}" />
+
+        <Setter Property="Height" Value="{StaticResource WindowBorder_Heigh}" />
+    </Style>
+
+    <!-- // NavigationPanael Narrow Style // -->
+
+    <system:Double x:Key="NavColumn_NarrowWidth">70</system:Double>
+
+    <Style  x:Key="NavBorderNarrow_Style"
+            TargetType="Border">
+
+        <Setter Property="Background" Value="{StaticResource NavigationBackgroundBrush}" />
+
+        <Setter Property="CornerRadius"  Value="{StaticResource CustomCornerRadius}" />
+
+        <Setter Property="Width" Value="{StaticResource NavColumn_NarrowWidth}" />
+
+        <Setter Property="Height" Value="{StaticResource WindowBorder_Heigh}" />
+    </Style>
+</ResourceDictionary>

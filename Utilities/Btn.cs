@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Page_Navigation_App.Utilities
+namespace Page_Navigation_App.Utilities;
+
+public class Btn : RadioButton
 {
-    public class Btn : RadioButton
-    {
-        static Btn()
+    /*    static Btn()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Btn), new FrameworkPropertyMetadata(typeof(Btn)));
         }
-    }
+    */
 }
