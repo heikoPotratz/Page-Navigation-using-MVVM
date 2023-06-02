@@ -3,99 +3,100 @@
 namespace Page_Navigation_App.Utilities;
 
 public static class KeyEventArgsConverter
+
 {
-    public enum PlayingHand
-    {
-        Left,
-        Right
-    }
-
-    public static string ConvertKey(KeyEventArgs e, PlayingHand playingHand)
-    {
-        var convertedKey = string.Empty;
-
-        switch (playingHand)
+    /*    public enum PlayingHand
         {
-            case PlayingHand.Left:
-                convertedKey = ConvertLeftHandKey(e.Key);
-                break;
+            Left,
+            Right
+        }*/
 
-            case PlayingHand.Right:
-                convertedKey = ConvertRightHandKey(e.Key);
-                break;
-        }
+    /*  public static string ConvertKey(KeyEventArgs e, PlayingHand playingHand)
+      {
+          var convertedKey = string.Empty;
 
-        return convertedKey;
-    }
+          switch (playingHand)
+          {
+              case PlayingHand.Left:
+                  convertedKey = ConvertLeftHandKey(e.Key);
+                  break;
 
-    private static string ConvertLeftHandKey(Key key)
-    {
-        var convertedKey = string.Empty;
+              case PlayingHand.Right:
+                  convertedKey = ConvertRightHandKey(e.Key);
+                  break;
+          }
 
-        switch (key)
-        {
-            case Key.F5:
-            case Key.C:
-                convertedKey = "C";
-                break;
+          return convertedKey;
+      }*/
 
-            case Key.F6:
-            case Key.V:
-                convertedKey = "D";
-                break;
+    /*  private static string ConvertLeftHandKey(Key key)
+      {
+          var convertedKey = string.Empty;
 
-            case Key.F7:
-            case Key.B:
-                convertedKey = "E";
-                break;
+          switch (key)
+          {
+              case Key.F5:
+              case Key.C:
+                  convertedKey = "C";
+                  break;
 
-            case Key.F8:
-            case Key.N:
-                convertedKey = "F";
-                break;
+              case Key.F6:
+              case Key.V:
+                  convertedKey = "D";
+                  break;
 
-            case Key.F9:
-            case Key.M:
-                convertedKey = "G";
-                break;
-        }
+              case Key.F7:
+              case Key.B:
+                  convertedKey = "E";
+                  break;
 
-        return convertedKey;
-    }
+              case Key.F8:
+              case Key.N:
+                  convertedKey = "F";
+                  break;
 
-    private static string ConvertRightHandKey(Key key)
-    {
-        var convertedKey = string.Empty;
+              case Key.F9:
+              case Key.M:
+                  convertedKey = "G";
+                  break;
+          }
 
-        switch (key)
-        {
-            case Key.F4:
-            case Key.Space:
-            case Key.C:
-                convertedKey = "C";
-                break;
+          return convertedKey;
+      }
 
-            case Key.F5:
-            case Key.V:
-                convertedKey = "D";
-                break;
+      private static string ConvertRightHandKey(Key key)
+      {
+          var convertedKey = string.Empty;
 
-            case Key.F6:
-            case Key.B:
-                convertedKey = "E";
-                break;
+          switch (key)
+          {
+              case Key.F4:
+              case Key.Space:
+              case Key.C:
+                  convertedKey = "C";
+                  break;
 
-            case Key.F7:
-            case Key.N:
-                convertedKey = "F";
-                break;
+              case Key.F5:
+              case Key.V:
+                  convertedKey = "D";
+                  break;
 
-            case Key.F8:
-            case Key.M:
-                convertedKey = "G";
-                break;
-        }
+              case Key.F6:
+              case Key.B:
+                  convertedKey = "E";
+                  break;
 
-        return convertedKey;
-    }
+              case Key.F7:
+              case Key.N:
+                  convertedKey = "F";
+                  break;
+
+              case Key.F8:
+              case Key.M:
+                  convertedKey = "G";
+                  break;
+          }
+
+          return convertedKey;
+      }*/
 }

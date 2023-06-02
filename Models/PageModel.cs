@@ -14,6 +14,12 @@ namespace Page_Navigation_App.Model
             get; set;
         }
 
+        public bool IsUserControlFocused
+        {
+            get;
+            set;
+        }
+
         public bool LocationStatus
         {
             get; set;
@@ -46,6 +52,12 @@ namespace Page_Navigation_App.Model
         }
 
         public decimal TransactionValue
+        {
+            get; set;
+        }
+
+        // This to save the type
+        public Type ViewModelType
         {
             get; set;
         }

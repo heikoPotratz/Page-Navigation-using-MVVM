@@ -2,9 +2,8 @@
 using System.Windows.Input;
 using MidiInput;
 using Page_Navigation_App.Utilities;
-using Page_Navigation_App.View;
 using Page_Navigation_App.ViewModel;
-using static Page_Navigation_App.Utilities.KeyEventArgsConverter;
+using static Page_Navigation_App.Utilities.CustomConverter;
 
 namespace Page_Navigation_App
 {
@@ -15,6 +14,7 @@ namespace Page_Navigation_App
     {
         private static PlayingHand _PlayingHand = PlayingHand.Right;
         private MidiWatcher _midiWatcher;
+        private TrebleClefVM _trebleClefViewModel;
 
         public MainWindow()
         {
@@ -23,16 +23,17 @@ namespace Page_Navigation_App
             Loaded += MainWindow_Loaded;
 
             // Registrieren der Eventhandler-Methoden für die KeyDown- und KeyUp-Events der MainWindow
-
             // Ereignisbindung
-            //this.KeyDown += Window_KeyDown;
 
-            KeyDown += /*KeyboardEventManager.*/Window_KeyDown;
-            KeyUp += /*KeyboardEventManager.*/Window_KeyUp;
+            KeyDown += Window_KeyDown;
+            KeyUp += Window_KeyUp;
 
             // Registriere den Eventhandler für das KeyEventReceived-Event
+            var em = new KeyboardEventManager();
+            // em.KeyEventReceived += OnKeyEventReceived;
 
-            KeyboardEventManager.KeyEventReceived += KeyboardEventManager_KeyEventReceived;
+            // Initialisiere das TrebleClefVM-Objekt
+            _trebleClefViewModel = new TrebleClefVM();
 
             // Set NavigationBar to narrow
             WindowSizing.ShrinkNavigationWidth();
@@ -74,20 +75,7 @@ namespace Page_Navigation_App
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            _midiWatcher = new MidiWatcher();
-            _midiWatcher.DeviceConnected += MidiWatcher_DeviceConnected;
-            _midiWatcher.DeviceDisconnected += MidiWatcher_DeviceDisconnected;
-            _midiWatcher.RefreshDeviceList();
-
-            if (_midiWatcher.MidiInDeviceList.Count == 0)
-            {
-                ShowStatusMessage("No MIDI devices found.");
-            }
-            else
-            {
-                var msg = $"MIDI devices '{_midiWatcher.ConnectedDevices.Count}' found.";
-                ShowStatusMessage(msg);
-            }
+            StartMidiWatcher(!true);
         }
 
         private void MidiWatcher_DeviceConnected(object sender, string deviceName)
@@ -109,32 +97,22 @@ namespace Page_Navigation_App
                 return;
             }
 
-            // Extrahieren Sie das DataContext aus dem XML-Objekt
-            var pageDataContext = Pages.DataContext;
-
-            // Erstellen Sie eine Instanz der TrebleClefVM-Klasse
-            var trebleClefVM = new TrebleClefVM();
-
-            // Rufen Sie die Methode im PageModel auf
-            trebleClefVM.SetNextRecevedKey(keyname);
-
-            // Rufen Sie die Methode im TrebleClef-UserControl auf
-            /*            if (pageDataContext is TrebleClef trebleClef)
-                        {
-                            if (trebleClef.DataContext is TrebleClefVM trebleClefVM)
-                            {
-                                trebleClefVM.SetNextExpectedKey("D");
-                            }
-                        }*/
-
             if (isKeyDown)
             {
-                ushort _DefaultVelocity = 120;
+                // Event in der ViewModel auslösen und den keyname-Wert übergeben
+                // Fehler Null Reference
+                if (DataContext is TrebleClefVM _trebleClefViewModel)
+                {
+                    _trebleClefViewModel.RecevedKeyName = keyname;
+                }
+
+                ushort _DefaultVelocity = 20;
                 using MidiSound m = new(keyname + "4", _DefaultVelocity);
+                m.Play();
             }
             else
             {
-                using MidiSound m = new(keyname + "4", 0);
+                // using MidiSound m = new(keyname + "4", 0);
             }
         }
 
@@ -142,6 +120,29 @@ namespace Page_Navigation_App
         {
             // Zeigen Sie die Statusmeldung hier an (z. B. MessageBox oder Aktualisierung der Benutzeroberfläche)
             MessageBox.Show(message);
+        }
+
+        private void StartMidiWatcher(bool run = true)
+        {
+            if (!run)
+            {
+                return;
+            }
+
+            _midiWatcher = new MidiWatcher();
+            _midiWatcher.DeviceConnected += MidiWatcher_DeviceConnected;
+            _midiWatcher.DeviceDisconnected += MidiWatcher_DeviceDisconnected;
+            _midiWatcher.RefreshDeviceList();
+
+            if (_midiWatcher.MidiInDeviceList.Count == 0)
+            {
+                ShowStatusMessage("No MIDI devices found.");
+            }
+            else
+            {
+                var msg = $"MIDI devices '{_midiWatcher.ConnectedDevices.Count}' found.";
+                ShowStatusMessage(msg);
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -168,15 +169,16 @@ namespace Page_Navigation_App
 
         #endregion statusmeldung
 
-        //
         /// <summary>
-        /// Returns a Notename Character0
+        /// Returns a Notename Character
         /// </summary>
         /// <param name="e"></param>
+        /// <param name="playingHand"></param>
         /// <returns></returns>
-        private static string ToNoteName(KeyEventArgs e, PlayingHand playingHand = PlayingHand.Right)
+        private static string ToNoteName(KeyEventArgs e, CustomConverter.PlayingHand playingHand = CustomConverter.PlayingHand.Right)
         {
-            return KeyEventArgsConverter.ConvertKey(e, playingHand);
+            var converTo = new CustomConverter();
+            return ((ICustomConverter)converTo).ConvertKey(e, playingHand);
         }
 
         private void CloseApp_Click(object sender, RoutedEventArgs e)
@@ -194,7 +196,7 @@ namespace Page_Navigation_App
             WindowSizing.ToggleNavigationWidth();
         }
 
-        private void KeyboardEventManager_KeyEventReceived(object sender, KeyEventArgs e)
+        private void OnKeyEventReceived(object sender, KeyEventArgs e)
         {
             // Handle den KeyEventReceived-Event hier
             // ...

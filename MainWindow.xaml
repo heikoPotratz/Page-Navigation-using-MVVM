@@ -65,7 +65,7 @@
                         </Grid>
                     </Menu:Btn>
 
-                    <!--// Customer //-->
+                    <!--// TrebleClef //-->
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
                               Command="{Binding TrebleClefCommand}">
@@ -81,6 +81,7 @@
                     </Menu:Btn>
 
                     <!--// Customer //-->
+                    <!--
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
                               Command="{Binding CustomersCommand}">
@@ -95,7 +96,9 @@
                         </Grid>
                     </Menu:Btn>
 
+                    -->
                     <!--// Products //-->
+                    <!--
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
                               Command="{Binding ProductsCommand}">
@@ -110,7 +113,9 @@
                         </Grid>
                     </Menu:Btn>
 
+                    -->
                     <!--// Orders //-->
+                    <!--
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
                               Command="{Binding OrdersCommand}">
@@ -125,7 +130,9 @@
                         </Grid>
                     </Menu:Btn>
 
+                    -->
                     <!--// Transactions //-->
+                    <!--
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
                               Command="{Binding TransactionsCommand}">
@@ -140,7 +147,9 @@
                         </Grid>
                     </Menu:Btn>
 
+                    -->
                     <!--// Shipments //-->
+                    <!--
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
                               Command="{Binding ShipmentsCommand}">
@@ -155,7 +164,9 @@
                         </Grid>
                     </Menu:Btn>
 
+                    -->
                     <!--// Settings //-->
+                    <!--
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
                               Command="{Binding SettingsCommand}">
@@ -168,7 +179,7 @@
                             <TextBlock Text="Settings"
                                        Style="{StaticResource Text_Style}" />
                         </Grid>
-                    </Menu:Btn>
+                    </Menu:Btn>-->
                 </StackPanel>
             </Grid>
 

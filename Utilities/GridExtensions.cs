@@ -29,6 +29,93 @@ public static class GridExtensions
     }
 
     /// <summary>
+    /// Finds a child element with a specific name and retrieves the x:Name and RowIndex of its parent Row in the parent Grid.
+    /// </summary>
+    /// <param name="parent">The parent element (Grid) to search within.</param>
+    /// <param name="childName">The name of the child element to find.</param>
+    /// <returns>A tuple containing the x:Name and RowIndex of the parent Row if found; otherwise, null.</returns>
+    public static (string Name, int? RowIndex) FindGridChildParentRowInfo(this Grid parent, string childName)
+    {
+        if (parent == null || string.IsNullOrEmpty(childName))
+        {
+            return (null, null);
+        }
+
+        foreach (UIElement child in parent.Children)
+        {
+            if (child is FrameworkElement frameworkElement && frameworkElement.Name == childName)
+            {
+                int? rowIndex = Grid.GetRow(frameworkElement);
+                if (rowIndex != null && parent.RowDefinitions.Count > rowIndex)
+                {
+                    var rowName = parent.RowDefinitions[rowIndex.Value].Name;
+                    return (rowName, rowIndex);
+                }
+            }
+        }
+
+        return (null, null);
+    }
+
+    /// <summary>
+    /// Finds a child element with a specific name and retrieves the x:Name of its parent Row in the parent Grid.
+    /// </summary>
+    /// <param name="parent">The parent element (Grid) to search within.</param>
+    /// <param name="childName">The name of the child element to find.</param>
+    /// <returns>The x:Name of the parent Row if found; otherwise, null.</returns>
+    public static string FindGridChildParentRowName(this Grid parent, string childName)
+    {
+        if (parent == null || string.IsNullOrEmpty(childName))
+        {
+            return null;
+        }
+
+        foreach (UIElement child in parent.Children)
+        {
+            if (child is FrameworkElement frameworkElement && frameworkElement.Name == childName)
+            {
+                if (Grid.GetRow(frameworkElement) is int rowIndex && parent.RowDefinitions.Count > rowIndex)
+                {
+                    return parent.RowDefinitions[rowIndex].Name;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Finds a child element with a specific name and retrieves its row index in the parent Grid.
+    /// </summary>
+    /// <param name="parent">The parent element (Grid) to search within.</param>
+    /// <param name="childName">The name of the child element to find.</param>
+    /// <returns>The row index of the child element if found; otherwise, -1.</returns>
+    public static int FindGridChildRowIndex(this Grid parent, string childName)
+    {
+        if (parent == null || string.IsNullOrEmpty(childName))
+        {
+            return -1;
+        }
+
+        for (var i = 0; i < parent.RowDefinitions.Count; i++)
+        {
+            foreach (UIElement child in parent.Children)
+            {
+                if (child is FrameworkElement frameworkElement && frameworkElement.Name == childName)
+                {
+                    var rowIndex = Grid.GetRow(frameworkElement);
+                    if (rowIndex == i)
+                    {
+                        return i;
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    /// <summary>
     /// Gets the index of the last row in the grid.
     /// </summary>
     /// <param name="grid">The grid to get the last row index from.</param>
@@ -163,16 +250,16 @@ public static class GridExtensions
             return null;
         }
 
-        int childCount = VisualTreeHelper.GetChildrenCount(parent);
-        for (int i = 0; i < childCount; i++)
+        var childCount = VisualTreeHelper.GetChildrenCount(parent);
+        for (var i = 0; i < childCount; i++)
         {
-            DependencyObject c = VisualTreeHelper.GetChild(parent, i);
+            var c = VisualTreeHelper.GetChild(parent, i);
             if (c is T typedChild && (c as FrameworkElement)?.Name == child)
             {
                 return typedChild;
             }
 
-            T foundChild = FindChild<T>(c, child);
+            var foundChild = FindChild<T>(c, child);
             if (foundChild != null)
             {
                 return foundChild;

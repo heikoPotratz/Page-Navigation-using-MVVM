@@ -43,7 +43,8 @@
         <Grid x:Name="TheClef" Grid.Row="0" Grid.Column="0"
               VerticalAlignment="Top"
               Width="450"
-              Margin="0 164 0 0">
+              Margin="0 164 0 0"
+              DataContext="{Binding TheClefGrid, Mode=OneWayToSource}">
             <Grid.Resources>
                 <!--    Formatdefinition of Grid.RowDefinition -->
                 <Style TargetType="{x:Type RowDefinition}">

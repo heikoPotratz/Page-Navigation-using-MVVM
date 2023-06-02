@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows.Controls;
+using System.Windows.Input;
 using Page_Navigation_App.Utilities;
 
 namespace Page_Navigation_App.ViewModel
@@ -6,6 +7,8 @@ namespace Page_Navigation_App.ViewModel
     internal class NavigationVM : ViewModelBase
     {
         private object _currentView;
+
+        private Grid _theGrid;
 
         public NavigationVM()
         {
@@ -23,15 +26,38 @@ namespace Page_Navigation_App.ViewModel
             CurrentView = new HomeVM();
         }
 
+        /// <summary>
+        /// Gets or sets the current view object.
+        /// </summary>
         public object CurrentView
         {
+            /*            get
+                        {
+                            return _currentView;
+                        }
+                        set
+                        {
+                            _currentView = value; OnPropertyChanged();
+                        }*/
             get
             {
                 return _currentView;
             }
             set
             {
-                _currentView = value; OnPropertyChanged();
+                _currentView = value;
+                OnPropertyChanged();
+
+                // Aktualisieren der TheClefGrid-Eigenschaft
+                if (_currentView is TrebleClefVM trebleClefVM)
+                {
+                    // wird ausgeführt für TrebleClevVM
+                    TheGrid = trebleClefVM.TheClefGrid;
+                }
+                else
+                {
+                    TheGrid = null;
+                }
             }
         }
 
@@ -68,6 +94,22 @@ namespace Page_Navigation_App.ViewModel
         public ICommand ShipmentsCommand
         {
             get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the grid object for the Treble Clef view.
+        /// </summary>
+        public Grid TheGrid
+        {
+            get
+            {
+                return _theGrid;
+            }
+            set
+            {
+                _theGrid = value;
+                OnPropertyChanged();
+            }
         }
 
         public ICommand TransactionsCommand

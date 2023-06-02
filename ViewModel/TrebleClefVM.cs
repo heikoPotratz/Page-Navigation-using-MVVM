@@ -1,21 +1,32 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using Page_Navigation_App.Model;
 using Page_Navigation_App.Utilities;
+using Page_Navigation_App.View;
 
 namespace Page_Navigation_App.ViewModel;
 
 internal class TrebleClefVM : ViewModelBase
 {
+    private static readonly string octaveNumber = "4";
     private readonly PageModel _pageModel;
-
+    private Grid _theClefGrid;
     private string[] keyValues = { "C", "D", "E", "F", "G" };
 
     public TrebleClefVM()
     {
         _pageModel = new PageModel();
         ExpectedKeyName = "C4";
+
+        // _theClefGrid initialisieren
+        _theClefGrid = new Grid();
+
+        // Erstelle eine Instanz von TheClef
     }
+
+    public event Action<string> RecevedKeyNameChanged;
 
     public string ExpectedKeyName
     {
@@ -41,32 +52,57 @@ internal class TrebleClefVM : ViewModelBase
         set
         {
             _pageModel.RecevedKeyName = value; OnPropertyChanged();
+
+            // Event auslösen, um die Änderung der RecevedKeyName-Eigenschaft zu signalisieren
+            // wird ausgefürt!
+            RecevedKeyNameChanged?.Invoke(value);
         }
     }
 
-    public void SetNextExpectedKey()
+    public Grid TheClefGrid
     {
-        ExpectedKeyName = Helper.GetRandomKey(keyValues) + "4";
+        get => _theClefGrid;
+        set
+        {
+            _theClefGrid = value;
+            OnPropertyChanged();
+        }
     }
 
-    public void SetNextRecevedKey()
-    {
-        RecevedKeyName = Helper.GetRandomKey(keyValues) + "4";
-    }
+    public void SetNextExpectedKey(string v) => ExpectedKeyName = v + octaveNumber;
 
     public void SetNextRecevedKey(string keyname)
     {
-        RecevedKeyName = keyname + "4";
+        RecevedKeyName = keyname;
+
+        // Debugging only
+        UpdateMessageText(keyname, true);
+    }
+
+    /// <summary>
+    /// Get Random Keyname
+    /// </summary>
+    public void SetRandomExpectedKey()
+    {
+        ExpectedKeyName = Helper.GetRandomKey(keyValues) + octaveNumber;
+    }
+
+    // for Debugging only
+    public void SetRandomRecevedKey()
+    {
+        RecevedKeyName = Helper.GetRandomKey(keyValues) + octaveNumber;
+
+        // Debugging only
+        UpdateMessageText(RecevedKeyName, true);
     }
 
     /// <summary>
     /// Update Text Property MessageText
     /// </summary>
     /// <param name="msg"></param>
-    public void UpdateMessageText(string msg)
+    public void UpdateMessageText(string msg, bool debuggingOnly)
     {
+        msg += debuggingOnly ? " (Debugging only)" : "";
         _pageModel.MessageText = msg;
     }
-
-    internal void SetNextExpectedKey(string v) => RecevedKeyName = v + "4";
 }

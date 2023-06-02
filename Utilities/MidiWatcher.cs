@@ -8,7 +8,7 @@ namespace Page_Navigation_App.Utilities
     /// <summary>
     /// Watches MIDI input devices for connection and disconnection events.
     /// </summary>
-    public class MidiWatcher : INotifyPropertyChanged
+    public class MidiWatcher : INotifyPropertyChanged, IMidiWatcher
     {
         private List<MidiIn> connectedDevices;
         private Dictionary<string, int> deviceIndexMap;

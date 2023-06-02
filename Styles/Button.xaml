@@ -33,6 +33,7 @@
                             <Border x:Name="Indicator"
                                     Height="35"
                                     Width="4"
+                                    Margin="10,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Background="#FFFFFF"
@@ -248,6 +249,7 @@
         </Style.Triggers>
     </Style>
 
+    <!--
     <Style TargetType="Button" x:Key="ButtonStyle.FlatButton">
 
         <Setter Property="Foreground" Value="White" />
@@ -287,4 +289,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+    -->
 </ResourceDictionary>

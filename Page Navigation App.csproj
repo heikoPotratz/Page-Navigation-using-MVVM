@@ -15,7 +15,9 @@
     <None Remove="Images\customer_page.png" />
     <None Remove="Images\home_new_page.png" />
     <None Remove="Images\home_page.png" />
+    <None Remove="Images\home_the_freak_page.png" />
     <None Remove="Images\image_play_key1.png" />
+    <None Remove="Images\imag_info.pdn" />
     <None Remove="Images\img_customer.png" />
     <None Remove="Images\img_home.png" />
     <None Remove="Images\img_info.png" />
@@ -27,6 +29,8 @@
     <None Remove="Images\img_shipment.png" />
     <None Remove="Images\img_transaction.png" />
     <None Remove="Images\img_trebelclef.png" />
+    <None Remove="Images\navmenu_back.png" />
+    <None Remove="Images\navmenu_def Hamburger.png" />
     <None Remove="Images\navmenu_def.png" />
     <None Remove="Images\navmenu_mo.png" />
     <None Remove="Images\order_page.png" />
@@ -38,6 +42,7 @@
     <None Remove="Images\transaction_page.png" />
     <None Remove="Images\trebleclef_page.png" />
     <None Remove="navmenu_def.png" />
+    <None Remove="View\home_new_page.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,10 +58,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="navmenu_def.png" />
+    <Resource Include="View\home_new_page.png" />
     <Content Include="Images\home_new_page.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\image_play_key1.png" />
+    <Content Include="Images\imag_info.pdn">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\img_info.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -67,6 +76,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\img_trebelclef.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\navmenu_def Hamburger.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\navmenu_def.png">
@@ -135,6 +147,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Images\NavigationBar\" />
+    <Folder Include="Images\Page_TrebleClef\" />
     <Folder Include="Temp\Code\" />
   </ItemGroup>
 
