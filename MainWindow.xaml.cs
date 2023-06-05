@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using MidiInput;
-using Page_Navigation_App.Utilities;
+using Page_Navigation_App.Utiel;
 using Page_Navigation_App.ViewModel;
-using static Page_Navigation_App.Utilities.CustomConverter;
+using static Page_Navigation_App.Utiel.CustomConverter;
 
 namespace Page_Navigation_App
 {

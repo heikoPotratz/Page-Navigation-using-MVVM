@@ -7,7 +7,7 @@ using Page_Navigation_App.Model;
 
 namespace Page_Navigation_App.ViewModel
 {
-    class OrderVM : Utilities.ViewModelBase
+    class OrderVM : Utiel.ViewModelBase
     {
         private readonly PageModel _pageModel;
         public DateOnly DisplayOrderDate

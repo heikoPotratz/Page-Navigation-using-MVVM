@@ -7,7 +7,7 @@ using Page_Navigation_App.Model;
 
 namespace Page_Navigation_App.ViewModel
 {
-    internal class CustomerVM : Utilities.ViewModelBase
+    internal class CustomerVM : Utiel.ViewModelBase
     {
         private readonly PageModel _pageModel;
 

@@ -20,7 +20,7 @@
 
                 <!--  // Dattemplate //  -->
 
-                <ResourceDictionary Source="Utilities/DataTemplate.xaml" />
+                <ResourceDictionary Source="Utiel/DataTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

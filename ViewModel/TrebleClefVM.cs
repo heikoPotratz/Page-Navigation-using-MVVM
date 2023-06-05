@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using Page_Navigation_App.Model;
-using Page_Navigation_App.Utilities;
+using Page_Navigation_App.Utiel;
 using Page_Navigation_App.View;
 
 namespace Page_Navigation_App.ViewModel;
@@ -18,7 +19,7 @@ internal class TrebleClefVM : ViewModelBase
     public TrebleClefVM()
     {
         _pageModel = new PageModel();
-        ExpectedKeyName = "C4";
+        SetRandomExpectedKey();
 
         // _theClefGrid initialisieren
         _theClefGrid = new Grid();
@@ -90,19 +91,21 @@ internal class TrebleClefVM : ViewModelBase
     // for Debugging only
     public void SetRandomRecevedKey()
     {
-        RecevedKeyName = Helper.GetRandomKey(keyValues) + octaveNumber;
+/*        RecevedKeyName = Helper.GetRandomKey(keyValues) + octaveNumber;
+        ExpectedKeyName = GridOfExpectedKey//.FindGridChildParentRowName()
 
+        _trebleClefVM.RecevedKeyName = "";
         // Debugging only
-        UpdateMessageText(RecevedKeyName, true);
+        UpdateMessageText(RecevedKeyName, true);*/
     }
 
     /// <summary>
     /// Update Text Property MessageText
     /// </summary>
     /// <param name="msg"></param>
-    public void UpdateMessageText(string msg, bool debuggingOnly)
+    public void UpdateMessageText(string msg, bool debuggingOnly, [CallerMemberName] string callerMethodName = "")
     {
-        msg += debuggingOnly ? " (Debugging only)" : "";
+        msg += debuggingOnly ? $" (Debugging only)  Called by: {callerMethodName}" : "";
         _pageModel.MessageText = msg;
     }
 }

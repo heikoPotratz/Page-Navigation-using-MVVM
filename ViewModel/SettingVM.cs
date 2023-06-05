@@ -7,7 +7,7 @@ using Page_Navigation_App.Model;
 
 namespace Page_Navigation_App.ViewModel
 {
-    class SettingVM : Utilities.ViewModelBase
+    class SettingVM : Utiel.ViewModelBase
     {
         private readonly PageModel _pageModel;
         public bool Settings

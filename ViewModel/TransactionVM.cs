@@ -7,7 +7,7 @@ using Page_Navigation_App.Model;
 
 namespace Page_Navigation_App.ViewModel
 {
-    class TransactionVM : Utilities.ViewModelBase
+    class TransactionVM : Utiel.ViewModelBase
     {
         private readonly PageModel _pageModel;
         public decimal TransactionAmount

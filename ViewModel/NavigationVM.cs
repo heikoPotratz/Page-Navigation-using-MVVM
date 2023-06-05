@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using Page_Navigation_App.Utilities;
+using Page_Navigation_App.Utiel;
 
 namespace Page_Navigation_App.ViewModel
 {

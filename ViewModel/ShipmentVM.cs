@@ -7,7 +7,7 @@ using Page_Navigation_App.Model;
 
 namespace Page_Navigation_App.ViewModel
 {
-    class ShipmentVM : Utilities.ViewModelBase
+    class ShipmentVM : Utiel.ViewModelBase
     {
         private readonly PageModel _pageModel;
         public TimeOnly ShipmentTracking

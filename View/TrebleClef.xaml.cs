@@ -2,10 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using MidiInput;
-using Page_Navigation_App.Utilities;
+using Page_Navigation_App.Utiel;
 using Page_Navigation_App.ViewModel;
-using static Page_Navigation_App.Utilities.CustomConverter;
+
+using static Page_Navigation_App.Utiel.CustomConverter;
 
 namespace Page_Navigation_App.View;
 
@@ -14,6 +16,7 @@ namespace Page_Navigation_App.View;
 /// </summary>
 public partial class TrebleClef : UserControl
 {
+    private static string _lastExpectedKey = string.Empty;
     private readonly Grid _theClefGrid;
     private bool _IsKeyMatched = false;
     private bool _keyDown = false;
@@ -26,40 +29,17 @@ public partial class TrebleClef : UserControl
     {
         InitializeComponent();
 
-        UserControlViewModelType = typeof(TrebleClefVM);
-
-        KeyDown += Window_KeyDown;
-        KeyUp += Window_KeyUp;
-
-        // Den Fokus auf das UserControl setzen
-        Keyboard.Focus(this);
-
-        //In der View abonnierst du das Event in der ViewModel-Klasse und führst den Move-Befehl aus:
-        SubscribeToViewModelEvents();
-
-        DataContext = new TrebleClefVM();
-
-        //
-        if (DataContext is TrebleClefVM _trebleClefVM)
-        {
-            _trebleClefVM.SetRandomExpectedKey();
-
-            ShowNextExpectedKey(_trebleClefVM.ExpectedKeyName);
-        }
-        else
-        {
-            throw new InvalidOperationException("DataContext is not of type TrebleClefVM.");
-        }
-
         // Erstellen und Zuweisen eines neuen Grid-Objekts
-        _theClefGrid = new();
+        _theClefGrid = new()
+        {
+            // DataContext auf das ViewModel setzen
+            DataContext = new TrebleClefVM()
+        };
 
-        // Weitere Initialisierungen oder Konfigurationen des Grid-Objekts
+        SetDefaultValues();
 
-        // DataContext auf das ViewModel setzen
-        _theClefGrid.DataContext = new TrebleClefVM();
-
-        //TheClef.Move(GridOfReceivedKey, trebleClefVM.RecevedKeyName);
+        //Display a random key as expectedKey
+        ShowNewExpectedKey();
     }
 
     public Type UserControlViewModelType
@@ -67,30 +47,54 @@ public partial class TrebleClef : UserControl
         get; set;
     }
 
-    private void btnNextExpectedKey_Click(object sender, RoutedEventArgs e)
+    private static void PlaySound(string keyname)
     {
-        if (DataContext is TrebleClefVM trebleClefVM)
+        ushort _DefaultVelocity = 45;
+        using MidiSound m = new(keyname, _DefaultVelocity);
+        m.Play();
+    }
+
+    /// <summary>
+    /// Returns a Notename Character
+    /// </summary>
+    /// <param name="e"></param>
+    /// <param name="playingHand"></param>
+    /// <returns></returns>
+    private static string ToNoteName(KeyEventArgs e, CustomConverter.PlayingHand playingHand = CustomConverter.PlayingHand.Right)
+    {
+        var converTo = new CustomConverter();
+        return ((ICustomConverter)converTo).ConvertKey(e, playingHand);
+    }
+
+    private void ActionLogic(string keyname)
+    {
+        // Event in der ViewModel auslösen und den keyname-Wert übergeben
+
+        _trebleClefVM = new();
+
+        _trebleClefVM.RecevedKeyName = keyname;
+
+        ShowRecevedKeyOnIsMatchFaile(keyname);
+
+        if (_IsKeyMatched)
         {
-            trebleClefVM.SetRandomExpectedKey();
+            PlaySound(keyname);
+
+            ShowHideRecevedKey(false);
+
+            // new Ecpected key for display
+            ShowNewExpectedKey();
+        }
+        else
+        {
+            ShowHideRecevedKey(true);
         }
     }
 
     private void btnNextRecevedKey_Click(object sender, RoutedEventArgs e)
     {
-        _trebleClefVM.SetRandomRecevedKey();
-        // Dispay result
-        _trebleClefVM.MessageText = GetRowIndex();
-
-        ShowHideRecevedKey(true);
-
-        TheClef.Move(GridOfReceivedKey, _trebleClefVM.RecevedKeyName);
-
-        _IsKeyMatched = (_trebleClefVM.RecevedKeyName == _trebleClefVM.ExpectedKeyName);
-
-        if (_IsKeyMatched)
-        {
-            PlaySound(_trebleClefVM.RecevedKeyName);
-        }
+        var keyname = Helper.GetRandomKey() + "4";
+        ActionLogic(keyname);
     }
 
     /// <summary>
@@ -103,63 +107,8 @@ public partial class TrebleClef : UserControl
         return ((ICustomConverter)new CustomConverter()).ConvertKey(e, _playingHand);
     }
 
-    private void DoActionLogic()
-    {
-        // Save result of incomming key
-        _IsKeyMatched = _trebleClefVM.ExpectedKeyName == _trebleClefVM.RecevedKeyName; // [x]
-
-        // Display the Expected key in the clef
-        DoShowExpectedNoteInTheClef(_trebleClefVM.ExpectedKeyName, false); // [x]
-
-        if (_keyDown) // [x]
-        {   // counter logic only when KeyDown / NoteOn
-            //_staticCounter.Add(_IsKeyMatched);
-
-            // Playing the note
-            if (_IsKeyMatched)
-            {
-                PlaySound(_trebleClefVM.ExpectedKeyName);
-
-                // Hide RecevedKey
-                ShowHideRecevedKey(false);
-
-                // Show next Expected random Note
-                _trebleClefVM.SetRandomExpectedKey();
-                DoShowExpectedNoteInTheClef(_trebleClefVM.ExpectedKeyName, false);
-            }
-            else
-            {   // or show only the note as false in red color
-                DoShowReceivedNoteInTheClef(false); // [x]
-            }
-        }
-        else
-        {   // Hide RecevedKey
-            ShowHideRecevedKey(false);
-        }
-
-        // Display value of counter
-        //lblCounter.Content = $"{_staticCounter.SuccessRate * 100} %";
-
-        // Finaly dispose the object
-        //_midiSound.Dispose();
-    }
-
     /// <summary>
-    ///
-    /// </summary>
-    /// <param name="keyname"></param>
-    /// <param name="isbool"></param>
-    private void DoShowExpectedNoteInTheClef(string keyname, bool isbool = false)
-    {
-        ShowNextExpectedKey(Helper.GetRandomKey());
-    }
-
-    private void DoShowReceivedNoteInTheClef(bool ismatched)
-    {
-    }
-
-    /// <summary>
-    /// Just forvdebuging info
+    /// Just fordebuging info
     /// </summary>
     /// <returns></returns>
     private string GetMsg()
@@ -192,21 +141,21 @@ public partial class TrebleClef : UserControl
         return "";
     }
 
-    private string GetRowIndex()
-    {
-        if (DataContext is TrebleClefVM trebleClefVM)
-        {
-            var index = TheClef.GetRowIndex(trebleClefVM.RecevedKeyName);
-            return $" GetRowIndex() {index}";
-        }
-        return "GetRowIndex()";
-    }
-
     private void HandleRecevedKeyNameChanged(string receivedKeyName)
     {
         // Führe hier den Move-Befehl aus, um TheClef zu bewegen
         // wird ausgeführt
         TheClef.Move(GridOfReceivedKey, receivedKeyName);
+    }
+
+    /// <summary>
+    /// I will need this for shure later on ....
+    /// </summary>
+    /// <param name="rowIndex"></param>
+    /// <returns></returns>
+    private bool IsOutOfRange(int rowIndex)
+    {
+        return false;
     }
 
     private void OnKeyEventReceived(KeyEventArgs e, bool isKeyDown)
@@ -223,37 +172,54 @@ public partial class TrebleClef : UserControl
 
         if (isKeyDown)
         {
-            // Event in der ViewModel auslösen und den keyname-Wert übergeben
-
-            _trebleClefVM = new();
-
-            _trebleClefVM.RecevedKeyName = keyname;
-            ShowHideRecevedKey(true);
-            PlaySound(keyname);
+            ActionLogic(keyname);
         }
         else
         {
+            // On keyUP hide Key
             ShowHideRecevedKey(false);
-            // using MidiSound m = new(keyname, 0);
         }
     }
 
-    private void PlaySound(string keyname)
-    {
-        ushort _DefaultVelocity = 45;
-        using MidiSound m = new(keyname, _DefaultVelocity);
-        m.Play();
-    }
-
+    /// <summary>
+    /// SubcribeWindow_KeyEvents();
+    /// SubscribeToViewModelEvents();
+    /// Keyboard.Focus(this);
+    /// DataContext = new TrebleClefVM();
+    /// </summary>
     private void SetDefaultValues()
     {
+        UserControlViewModelType = typeof(TrebleClefVM);
+
+        SubcribeWindow_KeyEvents();
+
+        //In der View abonnierst du das Event in der ViewModel-Klasse und führst den Move-Befehl aus:
+        SubscribeToViewModelEvents();
+
+        // Den Fokus auf das UserControl setzen
+        Keyboard.Focus(this);
+
+        DataContext = new TrebleClefVM();
+
+        // on Start Hide the Receved Key
+        ShowHideRecevedKey(false);
     }
 
-    private void SetVisibilityOfReceivedKey(bool isvisible)
+    private void ShowExpectedKey(string keyname)
+
     {
+        if (DataContext is TrebleClefVM trebleClefVM)
+        {
+            // trebleClefVM.SetNextRecevedKey(keyname);
+            // Dispay result
+            var i = TheClef.GetRowIndex(keyname);
+            trebleClefVM.ExpectedKeyName = keyname;
+            trebleClefVM.MessageText = $"GridOfExpectedKey - GetRowIndex:  {i} of: {keyname}";
+
+            TheClef.Move(GridOfExpectedKey, keyname);
+        }
     }
 
-    // ShowHideRecevedKey(GridOfReceivedKey, true);
     private void ShowHideRecevedKey(bool show)
     {
         if (show)
@@ -266,22 +232,55 @@ public partial class TrebleClef : UserControl
         }
     }
 
-    private void ShowNextExpectedKey(string keyname)
+    /// <summary>
+    /// Show key in TrebleClef when _IsKeyMatched value is false
+    /// </summary>
+    /// <param name="keyname"></param>
 
+    private void ShowNewExpectedKey()
+    {
+        var nextKey = Helper.GetRandomKey();
+
+        if (nextKey != _lastExpectedKey)
+        {
+            ShowExpectedKey(nextKey + "4");
+
+            // save last key
+            _lastExpectedKey = nextKey + "4";
+        }
+        else
+        {   // try again
+            ShowNewExpectedKey();
+        }
+    }
+
+    private void ShowRecevedKeyOnIsMatchFaile(string keyname)
     {
         if (DataContext is TrebleClefVM trebleClefVM)
         {
             // trebleClefVM.SetNextRecevedKey(keyname);
             // Dispay result
-            trebleClefVM.MessageText = GetRowIndex();
+            var i = TheClef.GetRowIndex(keyname);
+            trebleClefVM.RecevedKeyName = keyname;
 
-            TheClef.Move(GridOfExpectedKey, keyname);
+            trebleClefVM.MessageText = $"GridOfReceivedKey - GetRowIndex:  {i} of: {keyname}";
+
+            _IsKeyMatched = (trebleClefVM.ExpectedKeyName == trebleClefVM.RecevedKeyName);
+
+            if (!_IsKeyMatched)
+            {
+                TheClef.Move(GridOfReceivedKey, keyname);
+            }
         }
     }
 
-    private void ShowNextExpectedKey()
+    /// <summary>
+    ///  Adding KeyDow and KeyUp
+    /// </summary>
+    private void SubcribeWindow_KeyEvents()
     {
-        ShowNextExpectedKey(Helper.GetRandomKey());
+        KeyDown += Window_KeyDown;
+        KeyUp += Window_KeyUp;
     }
 
     private void SubscribeToViewModelEvents()
