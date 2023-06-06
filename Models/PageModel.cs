@@ -56,6 +56,12 @@ namespace Page_Navigation_App.Model
             get; set;
         }
 
+        public bool RightHandIsSet
+        {
+            get;
+            set;
+        }
+
         // This to save the type
         public Type ViewModelType
         {

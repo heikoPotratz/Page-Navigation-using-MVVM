@@ -183,7 +183,7 @@
                 </StackPanel>
             </Grid>
 
-            <!--  // // -->
+            <!--  // Content Area to place Page Content// -->
             <Grid Grid.Column="1">
 
                 <ContentControl x:Name="Pages"
@@ -197,6 +197,7 @@
                 Style="{StaticResource HamburgerBtn_Style}"
                 Click="HamburgerMenu_Click" />
 
+        <!--    Exit App  -->
         <Button x:Name="CloseApp"
                 Style="{StaticResource ExitApp}"
                 Click="CloseApp_Click" />

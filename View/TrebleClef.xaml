@@ -21,6 +21,15 @@
                             Stretch="None" />
             </Border.Background>
         </Border>
+        <Border x:Name="Playsetting" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0" Width="422">
+            <StackPanel x:Name="SttingPanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Width="97" Height="80" Margin="0,12,78,0">
+                <ToggleButton x:Name="tglRightHandIsSet" 
+                              Margin="0,0,0,0" Width="85" Height="90"  
+                              HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="True" Click="tglRightHandIsSet_Click" 
+                              
+                              ></ToggleButton>
+            </StackPanel>
+        </Border>
 
         <!--  Helper display PageModel Values  -->
 

@@ -22,6 +22,7 @@ public partial class TrebleClef : UserControl
     private bool _keyDown = false;
     private bool _lastKeyIsDown = false;
     private PlayingHand _playingHand = PlayingHand.Right;
+    private bool _rightHandIsSet;
     private TrebleClefVM _trebleClefVM = new();
     private bool _useKeyboardAsDefault = true;
 
@@ -68,7 +69,7 @@ public partial class TrebleClef : UserControl
 
     private void ActionLogic(string keyname)
     {
-        if (keyname.Contains("44")) 
+        if (keyname.Contains("44"))
         {
             return;
         }
@@ -170,7 +171,11 @@ public partial class TrebleClef : UserControl
         var keyname = ConvertKey(e);
         // var keyname = CustomConverter.ConvertKey(e, _playingHand);// ToNoteName(e, _PlayingHand);
 
-
+        // this prevents for running a Exeption
+        if (keyname.Length == 1)
+        {
+            return;
+        }
         if (isKeyDown)
         {
             ActionLogic(keyname);
@@ -190,6 +195,8 @@ public partial class TrebleClef : UserControl
     /// </summary>
     private void SetDefaultValues()
     {
+        _rightHandIsSet = true;
+
         UserControlViewModelType = typeof(TrebleClefVM);
 
         SubcribeWindow_KeyEvents();
@@ -337,4 +344,25 @@ public partial class TrebleClef : UserControl
     }
 
     #endregion FocusControl
+
+
+    /// <summary>
+    /// Togle Selected Hand to Play on Keybord Right or Left
+    /// to choose diverenzt part on the keyboard
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void tglRightHandIsSet_Click(object sender, RoutedEventArgs e)
+    {
+        if ((bool)tglRightHandIsSet.IsChecked)
+        {
+            _trebleClefVM.RightHandIsSet = true;
+            _playingHand = PlayingHand.Right;
+        }
+        else
+        {
+            _trebleClefVM.RightHandIsSet = false;
+            _playingHand = PlayingHand.Left;
+        }
+    }
 }

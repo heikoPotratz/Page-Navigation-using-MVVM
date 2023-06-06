@@ -117,6 +117,12 @@ internal class TrebleClefVM : ViewModelBase
         }
     }
 
+    public bool RightHandIsSet 
+    {
+        get;
+        set;
+    }
+
     public Grid TheClefGrid
     {
         get => _theClefGrid;
