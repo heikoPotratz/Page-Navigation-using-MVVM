@@ -68,6 +68,10 @@ public partial class TrebleClef : UserControl
 
     private void ActionLogic(string keyname)
     {
+        if (keyname.Contains("44")) 
+        {
+            return;
+        }
         // Event in der ViewModel auslösen und den keyname-Wert übergeben
 
         _trebleClefVM = new();
@@ -93,7 +97,7 @@ public partial class TrebleClef : UserControl
 
     private void btnNextRecevedKey_Click(object sender, RoutedEventArgs e)
     {
-        var keyname = Helper.GetRandomKey() + "4";
+        var keyname = Helper.GetRandomKey();
         ActionLogic(keyname);
     }
 
@@ -163,12 +167,9 @@ public partial class TrebleClef : UserControl
         // _PlayingHand is set in MainWindow()
 
         // Set a defaut Octave number avter converted for forther calculation
-        var keyname = ConvertKey(e) + "4";
+        var keyname = ConvertKey(e);
         // var keyname = CustomConverter.ConvertKey(e, _playingHand);// ToNoteName(e, _PlayingHand);
-        if (keyname.Length == 1)
-        {
-            return;
-        }
+
 
         if (isKeyDown)
         {
@@ -206,8 +207,12 @@ public partial class TrebleClef : UserControl
     }
 
     private void ShowExpectedKey(string keyname)
-
     {
+        if (keyname == "44")
+        {
+            return;
+        }
+
         if (DataContext is TrebleClefVM trebleClefVM)
         {
             // trebleClefVM.SetNextRecevedKey(keyname);
@@ -243,10 +248,10 @@ public partial class TrebleClef : UserControl
 
         if (nextKey != _lastExpectedKey)
         {
-            ShowExpectedKey(nextKey + "4");
+            ShowExpectedKey(nextKey);
 
             // save last key
-            _lastExpectedKey = nextKey + "4";
+            _lastExpectedKey = nextKey;
         }
         else
         {   // try again

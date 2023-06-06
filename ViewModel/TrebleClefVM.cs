@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Page_Navigation_App.Model;
 using Page_Navigation_App.Utiel;
@@ -19,7 +20,7 @@ internal class TrebleClefVM : ViewModelBase
     public TrebleClefVM()
     {
         _pageModel = new PageModel();
-        SetRandomExpectedKey();
+        //SetRandomExpectedKey();
 
         // _theClefGrid initialisieren
         _theClefGrid = new Grid();
@@ -28,6 +29,62 @@ internal class TrebleClefVM : ViewModelBase
     }
 
     public event Action<string> RecevedKeyNameChanged;
+
+    #region spezific Props
+
+    private new bool _isKeyDown;
+    private new bool _isKeyUp;
+    private KeyEventArgs _keyEventArgs;
+    private new string _recevedKey;
+
+    public new bool IsKeyDown
+    {
+        get
+        {
+            return _isKeyDown;
+        }
+        set
+        {
+            _isKeyDown = value;
+            // Hier können Sie weitere Aktionen ausführen oder andere Properties aktualisieren, die von der View gebunden sind.
+            OnPropertyChanged(nameof(IsKeyDown));
+        }
+    }
+
+    public new bool IsKeyUp
+    {
+        get
+        {
+            return _isKeyUp;
+        }
+        set
+        {
+            _isKeyUp = value;
+            OnPropertyChanged(nameof(IsKeyUp));
+        }
+    }
+
+    public KeyEventArgs KeyEventArgs
+    {
+        get
+        {
+            return _keyEventArgs;
+        }
+        set
+        {
+            _keyEventArgs = value;
+            // Hier können Sie weitere Aktionen ausführen oder andere Properties aktualisieren, die von der View gebunden sind.
+            OnPropertyChanged(nameof(KeyEventArgs));
+        }
+    }
+
+    public string RecevedNote
+    {
+        get;
+        set;
+    }
+
+    #endregion spezific Props
 
     public string ExpectedKeyName
     {
@@ -91,12 +148,12 @@ internal class TrebleClefVM : ViewModelBase
     // for Debugging only
     public void SetRandomRecevedKey()
     {
-/*        RecevedKeyName = Helper.GetRandomKey(keyValues) + octaveNumber;
-        ExpectedKeyName = GridOfExpectedKey//.FindGridChildParentRowName()
+        /*        RecevedKeyName = Helper.GetRandomKey(keyValues) + octaveNumber;
+                ExpectedKeyName = GridOfExpectedKey//.FindGridChildParentRowName()
 
-        _trebleClefVM.RecevedKeyName = "";
-        // Debugging only
-        UpdateMessageText(RecevedKeyName, true);*/
+                _trebleClefVM.RecevedKeyName = "";
+                // Debugging only
+                UpdateMessageText(RecevedKeyName, true);*/
     }
 
     /// <summary>

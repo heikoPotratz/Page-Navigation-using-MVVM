@@ -40,66 +40,6 @@ public class AppViewModel : INotifyPropertyChanged
         IsPanelVisible = true;
     }
 
-    /*  // Begin der Fehlerauskommentierung
-
-    // Show Panel Command //
-    public ICommand ShowPanelCommand
-    {
-        get
-        {
-            if (_showPanelCommand == null)
-            {
-                // Fehler:
-                _showPanelCommand = new RelayCommand.Command.RelayCommand(p => ShowPanel());
-            }
-            return _showPanelCommand;
-        }
-    }
-
-    // Hide Panel Method //
-    public void HidePanel()
-    {
-        IsPanelVisible = false;
-    }
-
-        // Hide Panel Command //
-        public ICommand HidePanelCommand
-        {
-            get
-            {
-                if (_hidePanelCommand == null)
-                {
-                    // Fehler:
-                    _hidePanelCommand = new RelayCommand.Command.RelayCommand(p => HidePanel());
-                }
-                return _hidePanelCommand;
-            }
-        }
-
-        // Close App Method //
-        public void CloseApp(object obj)
-        {
-            MainWindow win = obj as MainWindow;
-            win.Close();
-        }
-
-        // Close App Command //
-        private ICommand _closeCommand;
-        public ICommand CloseAppCommand
-        {
-            get
-            {
-                if (_closeCommand == null)
-                {
-                    // Fehler:
-                    _closeCommand = new RelayCommand.Command.RelayCommand(p => CloseApp(p));
-                }
-                return _closeCommand;
-            }
-        }
-
-       // Ende  Fehlercode */
-
     private void OnPropertyChanged(string propName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));

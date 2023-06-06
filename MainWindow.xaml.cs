@@ -25,8 +25,11 @@ namespace Page_Navigation_App
             // Registrieren der Eventhandler-Methoden für die KeyDown- und KeyUp-Events der MainWindow
             // Ereignisbindung
 
-            KeyDown += Window_KeyDown;
-            KeyUp += Window_KeyUp;
+            if (true)
+            {
+                KeyDown += Window_KeyDown;
+                KeyUp += Window_KeyUp;
+            }
 
             // Registriere den Eventhandler für das KeyEventReceived-Event
             var em = new KeyboardEventManager();
@@ -97,22 +100,43 @@ namespace Page_Navigation_App
                 return;
             }
 
-            if (isKeyDown)
-            {
-                // Event in der ViewModel auslösen und den keyname-Wert übergeben
-                // Fehler Null Reference
-                if (DataContext is TrebleClefVM _trebleClefViewModel)
-                {
-                    _trebleClefViewModel.RecevedKeyName = keyname;
-                }
+            #region Event set to
 
-                ushort _DefaultVelocity = 20;
-                using MidiSound m = new(keyname + "4", _DefaultVelocity);
-                m.Play();
-            }
-            else
+            if (DataContext is ViewModelBase trebleClefVM)
             {
-                // using MidiSound m = new(keyname + "4", 0);
+                trebleClefVM.KeyEventArgs = e;
+                trebleClefVM.IsKeyDown = isKeyDown;
+                trebleClefVM.IsKeyUp = !isKeyDown;
+                trebleClefVM.RecevedNote = keyname;
+
+                //
+                // NoteCharacter
+            }
+
+            #endregion Event set to
+
+            if (!true)
+            {
+                if (isKeyDown)
+                {
+                    // Event in der ViewModel auslösen und den keyname-Wert übergeben
+                    // Fehler Null Reference
+                    if (DataContext is TrebleClefVM _trebleClefViewModel)
+                    {
+                        _trebleClefViewModel.RecevedKeyName = keyname;
+                        ushort _DefaultVelocity = 20;
+                        using MidiSound m = new(keyname + "4", _DefaultVelocity);
+                        m.Play();
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    // using MidiSound m = new(keyname + "4", 0);
+                }
             }
         }
 
